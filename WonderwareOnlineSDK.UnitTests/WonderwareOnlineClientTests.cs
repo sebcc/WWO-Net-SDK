@@ -11,13 +11,13 @@ namespace WonderwareOnlineSDK.UnitTests
     public class WonderwareOnlineClientTests
     {
         [Fact]
-        public async Task WonderwareOnlineClient_AddProcessValue_NullTagArgument_ExpectException()
+        public void WonderwareOnlineClient_AddProcessValue_NullTagArgument_ExpectException()
         {
             ArgumentException argException = (ArgumentException)null;
             try
             {
                 var client = new WonderwareOnlineClient("Valid key");
-                await client.AddProcessValue(null, new object());
+                client.AddProcessValue(null, new object());
             }
             catch (ArgumentException argumentException)
             {
@@ -30,13 +30,13 @@ namespace WonderwareOnlineSDK.UnitTests
         }
 
         [Fact]
-        public async Task WonderwareOnlineClient_AddProcessValue_NullValueArgument_ExpectException()
+        public void WonderwareOnlineClient_AddProcessValue_NullValueArgument_ExpectException()
         {
             ArgumentException argException = (ArgumentException)null;
             try
             {
                 var client = new WonderwareOnlineClient("Valid key");
-                await client.AddProcessValue("tagName", null);
+                client.AddProcessValue("tagName", null);
             }
             catch (ArgumentException argumentException)
             {
@@ -67,19 +67,7 @@ namespace WonderwareOnlineSDK.UnitTests
         }
 
         [Fact]
-        public async Task WonderwareOnlineClient_SendTag_BackendCalled()
-        {
-            var apiMock = new Mock<IWonderwareOnlineUploadApi>();
-            var tag = new Tag();
-            tag.TagName = Guid.NewGuid().ToString();
-            var client = new WonderwareOnlineClient(apiMock.Object, "Valid key");
-            client.AddTag(tag);
-
-            apiMock.Verify(a => a.SendTagAsync(It.Is<TagUploadRequest>(t => t.metadata.ElementAt(0).TagName.Equals(tag.TagName))), Times.Once);
-        }
-
-        [Fact]
-        public async Task WonderwareOnlineClient_SendTagNullArgument_ExpectException()
+        public void WonderwareOnlineClient_SendTagNullArgument_ExpectException()
         {
             ArgumentException argException = (ArgumentException)null;
             try

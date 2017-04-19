@@ -30,8 +30,7 @@
 
             try
             {
-                var addValueTask = wonderwareOnlineClient.AddProcessValue(tag.TagName, stopWatch.ElapsedMilliseconds);
-                addValueTask.Wait();
+                wonderwareOnlineClient.AddProcessValue(tag.TagName, stopWatch.ElapsedMilliseconds);
                 Console.WriteLine($"Successfully created process values.");
             }
             catch (Exception ex)

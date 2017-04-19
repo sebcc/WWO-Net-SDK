@@ -4,14 +4,17 @@
     using Models;
     using System;
     using System.Collections.Generic;
+    using System.Linq;
+    using System.Text.RegularExpressions;
     using System.Threading.Tasks;
     using Helpers;
 
     public class WonderwareOnlineClient
     {
-        private IWonderwareOnlineUploadApi wonderwareOnlineUploadApi;
+        private readonly IWonderwareOnlineUploadApi wonderwareOnlineUploadApi;
 
-        private CollectionBuffer<Tag> tagCollectionBuffer;
+        private readonly CollectionBuffer<Tag> tagCollectionBuffer;
+        private readonly CollectionBuffer<ProcessValue> processValueCollectionBuffer;
 
         public WonderwareOnlineClient(string key) : this(new WonderwareOnlineUploadApi(key), key)
         {
@@ -26,9 +29,10 @@
 
             this.wonderwareOnlineUploadApi = wonderwareOnlineUploadApi;
             this.tagCollectionBuffer = new CollectionBuffer<Tag>();
+            this.processValueCollectionBuffer = new CollectionBuffer<ProcessValue>();
         }
 
-        public async Task AddProcessValue(string tagName, object value)
+        public void AddProcessValue(string tagName, object value)
         {
             if (string.IsNullOrWhiteSpace(tagName))
             {
@@ -40,20 +44,7 @@
                 throw new ArgumentException("Value should not be null or empty", nameof(value));
             }
 
-            var values = new List<Tuple<string, object>>();
-            values.Add(new Tuple<string, object>(tagName, value));
-            var uploadValueRequest = new DataUploadRequest();
-            var timerange = new Dictionary<string, object>();
-            timerange.Add("dateTime", DateTime.UtcNow.ToString("O"));
-
-            foreach (var tagValue in values)
-            {
-                timerange.Add(tagValue.Item1, tagValue.Item2);
-            }
-
-            uploadValueRequest.data.Add(timerange);
-
-            await this.wonderwareOnlineUploadApi.SendValueAsync(uploadValueRequest);
+            this.processValueCollectionBuffer.AddItem(new ProcessValue() { TagName = tagName, Timestamp = DateTime.UtcNow, Value = value });
         }
 
         public void AddTag(Tag tag)
@@ -69,6 +60,7 @@
         public async Task PurgeAsync()
         {
             await PurgeTagCollectionAsync(this.tagCollectionBuffer.ExtractBuffer());
+            await PurgeProcessValuesCollectionAsync(this.processValueCollectionBuffer.ExtractBuffer());
         }
 
         private async Task PurgeTagCollectionAsync(IEnumerable<Tag> tagsBuffer)
@@ -81,6 +73,26 @@
             }
 
             await this.wonderwareOnlineUploadApi.SendTagAsync(tagUploadRequest);
+        }
+
+        private async Task PurgeProcessValuesCollectionAsync(IEnumerable<ProcessValue> processValuesBuffer)
+        {
+            var groups = processValuesBuffer.GroupBy(
+               p => Regex.Match(p.Timestamp.ToString("O"), @"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}"));
+            var uploadValueRequest = new DataUploadRequest();
+
+            foreach (var group in groups)
+            {
+                var timerange = new Dictionary<string, object>();
+                timerange.Add("dateTime", group.FirstOrDefault().Timestamp.ToString("O"));
+                foreach (var processValue in group)
+                {
+                    timerange.Add(processValue.TagName, processValue.Value);
+                }
+                uploadValueRequest.data.Add(timerange);
+            }
+
+            await this.wonderwareOnlineUploadApi.SendValueAsync(uploadValueRequest);
         }
     }
 }
