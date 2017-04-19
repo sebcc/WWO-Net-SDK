@@ -12,4 +12,4 @@ script:
   - dotnet restore WonderwareOnlineSDK.UnitTests
   - dotnet build WonderwareOnlineSDK -c Release
   - dotnet build WonderwareOnlineSDK.UnitTests -c Release
-  - dotnet test ./WonderwareOnlineSDK.UnitTests/bin/BWS/Release/netcoreapp1.1/WonderwareOnlineSDK.UnitTests.dll
+  - dotnet test WonderwareOnlineSDK.UnitTests/WonderwareOnlineSDK.UnitTests.csproj
