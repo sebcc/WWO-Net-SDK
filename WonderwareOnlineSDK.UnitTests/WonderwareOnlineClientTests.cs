@@ -25,7 +25,7 @@ namespace WonderwareOnlineSDK.UnitTests
             }
 
             Assert.NotNull(argException);
-            Assert.Equal("TagName should not be null or empty\r\nParameter name: tagName", argException.Message);
+            Assert.Equal($"TagName should not be null or empty{Environment.NewLine}Parameter name: tagName", argException.Message);
             Assert.Equal("tagName", argException.ParamName);
         }
 
@@ -44,7 +44,7 @@ namespace WonderwareOnlineSDK.UnitTests
             }
 
             Assert.NotNull(argException);
-            Assert.Equal("Value should not be null or empty\r\nParameter name: value", argException.Message);
+            Assert.Equal($"Value should not be null or empty{Environment.NewLine}Parameter name: value", argException.Message);
             Assert.Equal("value", argException.ParamName);
         }
 
@@ -62,7 +62,7 @@ namespace WonderwareOnlineSDK.UnitTests
             }
 
             Assert.NotNull(argException);
-            Assert.Equal("Should not be null or empty\r\nParameter name: key", argException.Message);
+            Assert.Equal($"Should not be null or empty{Environment.NewLine}Parameter name: key", argException.Message);
             Assert.Equal("key", argException.ParamName);
         }
 
@@ -93,7 +93,7 @@ namespace WonderwareOnlineSDK.UnitTests
             }
 
             Assert.NotNull(argException);
-            Assert.Equal("Tag cannot be null\r\nParameter name: tag", argException.Message);
+            Assert.Equal($"Tag cannot be null{Environment.NewLine}Parameter name: tag", argException.Message);
             Assert.Equal("tag", argException.ParamName);
         }
     }
