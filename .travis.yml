@@ -1,11 +1,10 @@
 language: csharp
-solution: WonderwareOnlineSDK.sln
+mono: latest
 dotnet: 1.0.3
-install:
-  - nuget restore WonderwareOnlineSDK.sln
-  - nuget install xunit.runnner.console -Version 2.2.0 -OutputDirectory testrunner
+dist: trusty
 script:
-  - xbuild /p:Configuration=Release ./WonderwareOnlineSDK.csproj
+  - dotnet restore WonderwareOnlineSDK
   - dotnet restore WonderwareOnlineSDK.UnitTests
+  - dotnet build WonderwareOnlineSDK -c Release
   - dotnet build WonderwareOnlineSDK.UnitTests -c Release
-  - mono ./testrunner/xunit.runner.console.2.1.0/tools/xunit.console.exe ./WonderwareOnlineSDK.UnitTests/bin/Release/WonderwareOnlineSDK.UnitTests.dll
+  - dotnet test ./WonderwareOnlineSDK.UnitTests/bin/BWS/Release/netcoreapp1.1/WonderwareOnlineSDK.UnitTests.dll
