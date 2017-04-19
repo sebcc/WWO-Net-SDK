@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\WonderwareOnlineSDK\WonderwareOnlineSDK.csproj" />
+    <ProjectReference Include="..\..\WonderwareOnlineSDK\WonderwareOnlineSDK.csproj" />
   </ItemGroup>
 
 </Project>
