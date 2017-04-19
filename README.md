@@ -1,4 +1,5 @@
 # WWO-Net-SDK
+https://travis-ci.org/sebcc/WWO-Net-SDK.svg?branch=master
 Wonderware Online .NET SDK
 ==========================
 This SDK helps you create and upload tags to Wonderware Online upload API.

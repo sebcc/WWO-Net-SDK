@@ -1,8 +1,6 @@
 language: csharp
 solution: WonderwareOnlineSDK.sln
-mono: none
-dotnet: 1.0.1
-dist: trusty
+dotnet: 1.0.3
 install:
   - nuget restore WonderwareOnlineSDK.sln
   - nuget install xunit.runnner.console -Version 2.2.0 -OutputDirectory testrunner
