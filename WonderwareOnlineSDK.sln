@@ -9,13 +9,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WonderwareOnlineSDK.UnitTes
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{A8065035-18B5-48D0-A7A2-B49E62E41706}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WWOUploader", "WWOUploader\WWOUploader.csproj", "{1C365800-5932-4126-89E5-E81DC2796A0A}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D125FEC2-40C0-4A8F-A929-A7E0F2CB5EA3}"
 	ProjectSection(SolutionItems) = preProject
 		.travis.yml = .travis.yml
 		README.md = README.md
 	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WWOUploader", "Samples\WWOUploader\WWOUploader.csproj", "{822EC270-C1E5-4962-AE60-93DD39A90D0B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,15 +31,15 @@ Global
 		{6C9C5CB4-2A19-470B-BC05-7B5DD5594630}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6C9C5CB4-2A19-470B-BC05-7B5DD5594630}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6C9C5CB4-2A19-470B-BC05-7B5DD5594630}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1C365800-5932-4126-89E5-E81DC2796A0A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1C365800-5932-4126-89E5-E81DC2796A0A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1C365800-5932-4126-89E5-E81DC2796A0A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1C365800-5932-4126-89E5-E81DC2796A0A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{822EC270-C1E5-4962-AE60-93DD39A90D0B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{822EC270-C1E5-4962-AE60-93DD39A90D0B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{822EC270-C1E5-4962-AE60-93DD39A90D0B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{822EC270-C1E5-4962-AE60-93DD39A90D0B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{1C365800-5932-4126-89E5-E81DC2796A0A} = {A8065035-18B5-48D0-A7A2-B49E62E41706}
+		{822EC270-C1E5-4962-AE60-93DD39A90D0B} = {A8065035-18B5-48D0-A7A2-B49E62E41706}
 	EndGlobalSection
 EndGlobal
