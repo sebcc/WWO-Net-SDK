@@ -5,10 +5,13 @@
     using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
+    using Helpers;
 
     public class WonderwareOnlineClient
     {
         private IWonderwareOnlineUploadApi wonderwareOnlineUploadApi;
+
+        private CollectionBuffer<Tag> tagCollectionBuffer;
 
         public WonderwareOnlineClient(string key) : this(new WonderwareOnlineUploadApi(key), key)
         {
@@ -22,6 +25,7 @@
             }
 
             this.wonderwareOnlineUploadApi = wonderwareOnlineUploadApi;
+            this.tagCollectionBuffer = new CollectionBuffer<Tag>();
         }
 
         public async Task AddProcessValue(string tagName, object value)
@@ -52,15 +56,30 @@
             await this.wonderwareOnlineUploadApi.SendValueAsync(uploadValueRequest);
         }
 
-        public async Task AddTagAsync(Tag tag)
+        public void AddTag(Tag tag)
         {
             if (tag == null)
             {
                 throw new ArgumentException("Tag cannot be null", nameof(tag));
             }
 
+            this.tagCollectionBuffer.AddItem(tag);
+        }
+
+        public async Task PurgeAsync()
+        {
+            await PurgeTagCollectionAsync(this.tagCollectionBuffer.ExtractBuffer());
+        }
+
+        private async Task PurgeTagCollectionAsync(IEnumerable<Tag> tagsBuffer)
+        {
             var tagUploadRequest = new TagUploadRequest();
-            tagUploadRequest.metadata.Add(tag);
+
+            foreach (var tag in tagsBuffer)
+            {
+                tagUploadRequest.metadata.Add(tag);
+            }
+
             await this.wonderwareOnlineUploadApi.SendTagAsync(tagUploadRequest);
         }
     }

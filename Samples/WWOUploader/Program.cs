@@ -20,8 +20,7 @@
 
             try
             {
-                var addTagTask = wonderwareOnlineClient.AddTagAsync(tag);
-                addTagTask.Wait();
+                wonderwareOnlineClient.AddTag(tag);
                 Console.WriteLine($"Successfully created tag - {tag.TagName}.");
             }
             catch (Exception ex)
@@ -38,6 +37,17 @@
             catch (Exception ex)
             {
                 Console.WriteLine("Could not add process value. Ex.:" + ex);
+            }
+
+            try
+            {
+                var purgeTask = wonderwareOnlineClient.PurgeAsync();
+                purgeTask.Wait();
+                Console.WriteLine($"Successfully purged.");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Could not purge data. Ex.:" + ex);
             }
 
             Console.ReadLine();

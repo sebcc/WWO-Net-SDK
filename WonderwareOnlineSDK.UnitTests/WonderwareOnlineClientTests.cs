@@ -73,7 +73,7 @@ namespace WonderwareOnlineSDK.UnitTests
             var tag = new Tag();
             tag.TagName = Guid.NewGuid().ToString();
             var client = new WonderwareOnlineClient(apiMock.Object, "Valid key");
-            await client.AddTagAsync(tag);
+            client.AddTag(tag);
 
             apiMock.Verify(a => a.SendTagAsync(It.Is<TagUploadRequest>(t => t.metadata.ElementAt(0).TagName.Equals(tag.TagName))), Times.Once);
         }
@@ -85,7 +85,7 @@ namespace WonderwareOnlineSDK.UnitTests
             try
             {
                 var client = new WonderwareOnlineClient("Valid key");
-                await client.AddTagAsync(null);
+                client.AddTag(null);
             }
             catch (ArgumentException argumentException)
             {
