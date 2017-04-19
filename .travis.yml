@@ -1,6 +1,6 @@
 language: csharp
 mono: latest
-dotnet: 1.0.3
+dotnet: 1.0.1
 dist: trusty
 script:
   - dotnet restore WonderwareOnlineSDK
