@@ -1,0 +1,44 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26403.7
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WonderwareOnlineSDK", "WonderwareOnlineSDK\WonderwareOnlineSDK.csproj", "{46B1A546-C256-4A14-9E59-E4F6F459B1B3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WonderwareOnlineSDK.UnitTests", "WonderwareOnlineSDK.UnitTests\WonderwareOnlineSDK.UnitTests.csproj", "{6C9C5CB4-2A19-470B-BC05-7B5DD5594630}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{A8065035-18B5-48D0-A7A2-B49E62E41706}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WWOUploader", "WWOUploader\WWOUploader.csproj", "{1C365800-5932-4126-89E5-E81DC2796A0A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D125FEC2-40C0-4A8F-A929-A7E0F2CB5EA3}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{46B1A546-C256-4A14-9E59-E4F6F459B1B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{46B1A546-C256-4A14-9E59-E4F6F459B1B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{46B1A546-C256-4A14-9E59-E4F6F459B1B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{46B1A546-C256-4A14-9E59-E4F6F459B1B3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C9C5CB4-2A19-470B-BC05-7B5DD5594630}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C9C5CB4-2A19-470B-BC05-7B5DD5594630}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C9C5CB4-2A19-470B-BC05-7B5DD5594630}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C9C5CB4-2A19-470B-BC05-7B5DD5594630}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1C365800-5932-4126-89E5-E81DC2796A0A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C365800-5932-4126-89E5-E81DC2796A0A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C365800-5932-4126-89E5-E81DC2796A0A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C365800-5932-4126-89E5-E81DC2796A0A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{1C365800-5932-4126-89E5-E81DC2796A0A} = {A8065035-18B5-48D0-A7A2-B49E62E41706}
+	EndGlobalSection
+EndGlobal
