@@ -2,6 +2,7 @@
 {
     using System;
     using System.Diagnostics;
+    using System.Threading;
     using WonderwareOnlineSDK;
     using WonderwareOnlineSDK.Models;
 
@@ -9,7 +10,7 @@
     {
         private static void Main(string[] args)
         {
-            var wonderwareOnlineClient = new WonderwareOnlineClient("PROVIDE KEY HERE");
+            var wonderwareOnlineClient = new WonderwareOnlineClient("PROVIDE TOKEN HERE");
             var stopWatch = Stopwatch.StartNew();
 
             // Create tag
@@ -30,7 +31,12 @@
 
             try
             {
-                wonderwareOnlineClient.AddProcessValue(tag.TagName, stopWatch.ElapsedMilliseconds);
+                for(int i = 0; i<5; i++)
+                {
+                    wonderwareOnlineClient.AddProcessValue(tag.TagName, stopWatch.ElapsedMilliseconds + i);   
+                    Thread.Sleep(10);
+                }
+                
                 Console.WriteLine($"Successfully created process values.");
             }
             catch (Exception ex)

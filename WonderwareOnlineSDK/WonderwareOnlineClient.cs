@@ -16,11 +16,16 @@
         private readonly CollectionBuffer<Tag> tagCollectionBuffer;
         private readonly CollectionBuffer<ProcessValue> processValueCollectionBuffer;
 
-        public WonderwareOnlineClient(string key) : this(new WonderwareOnlineUploadApi(key), key)
+        public WonderwareOnlineClient(string key) : 
+            this(new WonderwareOnlineUploadApi(key), new CollectionBuffer<Tag>(), new CollectionBuffer<ProcessValue>(),  key)
         {
         }
 
-        internal WonderwareOnlineClient(IWonderwareOnlineUploadApi wonderwareOnlineUploadApi, string key)
+        internal WonderwareOnlineClient(
+            IWonderwareOnlineUploadApi wonderwareOnlineUploadApi, 
+            CollectionBuffer<Tag> tagBuffer, 
+            CollectionBuffer<ProcessValue> processValueBuffer,
+             string key)
         {
             if (string.IsNullOrWhiteSpace(key))
             {
@@ -28,8 +33,8 @@
             }
 
             this.wonderwareOnlineUploadApi = wonderwareOnlineUploadApi;
-            this.tagCollectionBuffer = new CollectionBuffer<Tag>();
-            this.processValueCollectionBuffer = new CollectionBuffer<ProcessValue>();
+            this.tagCollectionBuffer = tagBuffer;
+            this.processValueCollectionBuffer = processValueBuffer;
         }
 
         public void AddProcessValue(string tagName, object value)
@@ -77,22 +82,9 @@
 
         private async Task PurgeProcessValuesCollectionAsync(IEnumerable<ProcessValue> processValuesBuffer)
         {
-            var groups = processValuesBuffer.GroupBy(
-               p => Regex.Match(p.Timestamp.ToString("O"), @"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}"));
-            var uploadValueRequest = new DataUploadRequest();
+            var request = Converter.ConvertFromBuffer(processValuesBuffer);
 
-            foreach (var group in groups)
-            {
-                var timerange = new Dictionary<string, object>();
-                timerange.Add("dateTime", group.FirstOrDefault().Timestamp.ToString("O"));
-                foreach (var processValue in group)
-                {
-                    timerange.Add(processValue.TagName, processValue.Value);
-                }
-                uploadValueRequest.data.Add(timerange);
-            }
-
-            await this.wonderwareOnlineUploadApi.SendValueAsync(uploadValueRequest);
+            await this.wonderwareOnlineUploadApi.SendValueAsync(request);
         }
     }
 }
