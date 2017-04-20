@@ -2,6 +2,7 @@
 {
     using System;
     using System.Diagnostics;
+    using System.Threading;
     using WonderwareOnlineSDK;
     using WonderwareOnlineSDK.Models;
 
@@ -9,7 +10,7 @@
     {
         private static void Main(string[] args)
         {
-            var wonderwareOnlineClient = new WonderwareOnlineClient("PROVIDE KEY HERE");
+            var wonderwareOnlineClient = new WonderwareOnlineClient("PROVIDE TOKEN HERE");
             var stopWatch = Stopwatch.StartNew();
 
             // Create tag
@@ -20,8 +21,7 @@
 
             try
             {
-                var addTagTask = wonderwareOnlineClient.AddTagAsync(tag);
-                addTagTask.Wait();
+                wonderwareOnlineClient.AddTag(tag);
                 Console.WriteLine($"Successfully created tag - {tag.TagName}.");
             }
             catch (Exception ex)
@@ -31,13 +31,28 @@
 
             try
             {
-                var addValueTask = wonderwareOnlineClient.AddProcessValue(tag.TagName, stopWatch.ElapsedMilliseconds);
-                addValueTask.Wait();
+                for(int i = 0; i<5; i++)
+                {
+                    wonderwareOnlineClient.AddProcessValue(tag.TagName, stopWatch.ElapsedMilliseconds + i);   
+                    Thread.Sleep(10);
+                }
+                
                 Console.WriteLine($"Successfully created process values.");
             }
             catch (Exception ex)
             {
                 Console.WriteLine("Could not add process value. Ex.:" + ex);
+            }
+
+            try
+            {
+                var purgeTask = wonderwareOnlineClient.PurgeAsync();
+                purgeTask.Wait();
+                Console.WriteLine($"Successfully purged.");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Could not purge data. Ex.:" + ex);
             }
 
             Console.ReadLine();

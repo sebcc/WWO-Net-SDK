@@ -4,17 +4,28 @@
     using Models;
     using System;
     using System.Collections.Generic;
+    using System.Linq;
+    using System.Text.RegularExpressions;
     using System.Threading.Tasks;
+    using Helpers;
 
     public class WonderwareOnlineClient
     {
-        private IWonderwareOnlineUploadApi wonderwareOnlineUploadApi;
+        private readonly IWonderwareOnlineUploadApi wonderwareOnlineUploadApi;
 
-        public WonderwareOnlineClient(string key) : this(new WonderwareOnlineUploadApi(key), key)
+        private readonly CollectionBuffer<Tag> tagCollectionBuffer;
+        private readonly CollectionBuffer<ProcessValue> processValueCollectionBuffer;
+
+        public WonderwareOnlineClient(string key) : 
+            this(new WonderwareOnlineUploadApi(key), new CollectionBuffer<Tag>(), new CollectionBuffer<ProcessValue>(),  key)
         {
         }
 
-        internal WonderwareOnlineClient(IWonderwareOnlineUploadApi wonderwareOnlineUploadApi, string key)
+        internal WonderwareOnlineClient(
+            IWonderwareOnlineUploadApi wonderwareOnlineUploadApi, 
+            CollectionBuffer<Tag> tagBuffer, 
+            CollectionBuffer<ProcessValue> processValueBuffer,
+             string key)
         {
             if (string.IsNullOrWhiteSpace(key))
             {
@@ -22,9 +33,11 @@
             }
 
             this.wonderwareOnlineUploadApi = wonderwareOnlineUploadApi;
+            this.tagCollectionBuffer = tagBuffer;
+            this.processValueCollectionBuffer = processValueBuffer;
         }
 
-        public async Task AddProcessValue(string tagName, object value)
+        public void AddProcessValue(string tagName, object value)
         {
             if (string.IsNullOrWhiteSpace(tagName))
             {
@@ -36,32 +49,42 @@
                 throw new ArgumentException("Value should not be null or empty", nameof(value));
             }
 
-            var values = new List<Tuple<string, object>>();
-            values.Add(new Tuple<string, object>(tagName, value));
-            var uploadValueRequest = new DataUploadRequest();
-            var timerange = new Dictionary<string, object>();
-            timerange.Add("dateTime", DateTime.UtcNow.ToString("O"));
-
-            foreach (var tagValue in values)
-            {
-                timerange.Add(tagValue.Item1, tagValue.Item2);
-            }
-
-            uploadValueRequest.data.Add(timerange);
-
-            await this.wonderwareOnlineUploadApi.SendValueAsync(uploadValueRequest);
+            this.processValueCollectionBuffer.AddItem(new ProcessValue() { TagName = tagName, Timestamp = DateTime.UtcNow, Value = value });
         }
 
-        public async Task AddTagAsync(Tag tag)
+        public void AddTag(Tag tag)
         {
             if (tag == null)
             {
                 throw new ArgumentException("Tag cannot be null", nameof(tag));
             }
 
+            this.tagCollectionBuffer.AddItem(tag);
+        }
+
+        public async Task PurgeAsync()
+        {
+            await PurgeTagCollectionAsync(this.tagCollectionBuffer.ExtractBuffer());
+            await PurgeProcessValuesCollectionAsync(this.processValueCollectionBuffer.ExtractBuffer());
+        }
+
+        private async Task PurgeTagCollectionAsync(IEnumerable<Tag> tagsBuffer)
+        {
             var tagUploadRequest = new TagUploadRequest();
-            tagUploadRequest.metadata.Add(tag);
+
+            foreach (var tag in tagsBuffer)
+            {
+                tagUploadRequest.metadata.Add(tag);
+            }
+
             await this.wonderwareOnlineUploadApi.SendTagAsync(tagUploadRequest);
+        }
+
+        private async Task PurgeProcessValuesCollectionAsync(IEnumerable<ProcessValue> processValuesBuffer)
+        {
+            var request = Converter.ConvertFromBuffer(processValuesBuffer);
+
+            await this.wonderwareOnlineUploadApi.SendValueAsync(request);
         }
     }
 }

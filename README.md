@@ -14,6 +14,12 @@ Supported
 -----------
 - .Net Standard 1.1
 
+Features
+-----------
+- Caching of data
+- Json format upload
+- Manually purge the cache
+
 How it works
 -----------
 - Create a CSV/JSON datasources from [Wonderware Online Datasource](https://online.wonderware.com/DataSourceManagement) 
