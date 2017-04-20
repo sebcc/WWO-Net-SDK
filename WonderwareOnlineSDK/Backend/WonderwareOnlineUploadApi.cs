@@ -1,5 +1,6 @@
 ﻿namespace WonderwareOnlineSDK.Backend
 {
+    using System;
     using Newtonsoft.Json;
     using System.Net.Http;
     using System.Text;
@@ -8,11 +9,24 @@
     internal class WonderwareOnlineUploadApi : IWonderwareOnlineUploadApi
     {
         private readonly string key;
-        private readonly string uploadApi = "https://online.wonderware.com/apis/upload/datasource";
+        private readonly string hostname;
+        private readonly string uploadApi;
 
-        public WonderwareOnlineUploadApi(string key)
+        public WonderwareOnlineUploadApi(string hostname, string key)
         {
+            if (string.IsNullOrWhiteSpace(hostname) || !hostname.StartsWith("online.wonderware"))
+            {
+                throw new ArgumentException("Should not be null or empty or start with 'online.wonderware'", nameof(hostname));
+            }
+
+            if (string.IsNullOrWhiteSpace(key))
+            {
+                throw new ArgumentException("Should not be null or empty", nameof(key));
+            }
+
             this.key = key;
+            this.hostname = hostname;
+            this.uploadApi = $"https://{hostname}/apis/upload/datasource";
         }
 
         public async Task SendTagAsync(TagUploadRequest tagUploadRequest)

@@ -8,6 +8,7 @@ namespace WonderwareOnlineSDK.UnitTests
     using System.Linq;
     using System.Threading.Tasks;
     using System.Collections.Generic;
+    using WonderwareOnlineSDK.Backend;
     using Xunit;
 
     public class WonderwareOnlineClientTests
@@ -51,24 +52,6 @@ namespace WonderwareOnlineSDK.UnitTests
         }
 
         [Fact]
-        public void WonderwareOnlineClient_Constructor_Exception()
-        {
-            ArgumentException argException = (ArgumentException)null;
-            try
-            {
-                var client = new WonderwareOnlineClient(null);
-            }
-            catch (ArgumentException argumentException)
-            {
-                argException = argumentException;
-            }
-
-            Assert.NotNull(argException);
-            Assert.Equal($"Should not be null or empty{Environment.NewLine}Parameter name: key", argException.Message);
-            Assert.Equal("key", argException.ParamName);
-        }
-
-        [Fact]
         public void WonderwareOnlineClient_SendTagNullArgument_ExpectException()
         {
             ArgumentException argException = (ArgumentException)null;
@@ -92,13 +75,13 @@ namespace WonderwareOnlineSDK.UnitTests
         {
             // SETUP
             var tags = new List<Tag>();
-            tags.Add(new Tag(){TagName = "Tag1"});
+            tags.Add(new Tag() { TagName = "Tag1" });
 
             var processValues = new List<ProcessValue>();
-            processValues.Add(new ProcessValue(){Timestamp = new DateTime(2017, 4,19,11,12,13,666,DateTimeKind.Utc), Value = 5, TagName = "Tag1"});
-            processValues.Add(new ProcessValue(){Timestamp = new DateTime(2017, 4,19,11,12,13,666,DateTimeKind.Utc), Value = 6, TagName = "Tag2"});
-            processValues.Add(new ProcessValue(){Timestamp = new DateTime(2017, 4,19,11,12,13,555,DateTimeKind.Utc), Value = 6, TagName = "Tag1"});
-            
+            processValues.Add(new ProcessValue() { Timestamp = new DateTime(2017, 4, 19, 11, 12, 13, 666, DateTimeKind.Utc), Value = 5, TagName = "Tag1" });
+            processValues.Add(new ProcessValue() { Timestamp = new DateTime(2017, 4, 19, 11, 12, 13, 666, DateTimeKind.Utc), Value = 6, TagName = "Tag2" });
+            processValues.Add(new ProcessValue() { Timestamp = new DateTime(2017, 4, 19, 11, 12, 13, 555, DateTimeKind.Utc), Value = 6, TagName = "Tag1" });
+
             var tagBuffer = new CollectionBufferMoq<Tag>(tags.ToArray());
             var processValueBuffer = new CollectionBufferMoq<ProcessValue>(processValues.ToArray());
             var apiMock = new Mock<IWonderwareOnlineUploadApi>();
@@ -110,9 +93,8 @@ namespace WonderwareOnlineSDK.UnitTests
             // ASSERT
             Assert.Equal(0, tagBuffer.ItemCount);
             Assert.Equal(0, processValueBuffer.ItemCount);
-            apiMock.Verify(a=> a.SendTagAsync(It.Is<TagUploadRequest>(t => t.metadata.Count == 1)), Times.Once);
-            apiMock.Verify(a=> a.SendValueAsync(It.Is<DataUploadRequest>(d => d.data.Count == 2)), Times.Once);
-            
+            apiMock.Verify(a => a.SendTagAsync(It.Is<TagUploadRequest>(t => t.metadata.Count == 1)), Times.Once);
+            apiMock.Verify(a => a.SendValueAsync(It.Is<DataUploadRequest>(d => d.data.Count == 2)), Times.Once);
         }
     }
 }
