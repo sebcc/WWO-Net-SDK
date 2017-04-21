@@ -5,6 +5,10 @@
     <TargetFramework>netcoreapp1.1</TargetFramework>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <RuntimeIdentifiers>win7-x64;osx.10-11-x64;ubuntu.16.04-x64</RuntimeIdentifiers>
+  </PropertyGroup>
+  
   <ItemGroup>
     <ProjectReference Include="..\..\WonderwareOnlineSDK\WonderwareOnlineSDK.csproj" />
   </ItemGroup>
