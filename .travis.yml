@@ -18,7 +18,7 @@ deploy:
   provider: releases
   api_key:
     secure: Ixv05QguJ1m0IED0q50pK+dBpkzr5CLk+wEY3V0pf6pmXWnlv6fllp+qWnBjtbAMgWSwSZ1m+hh/QVUc1aRmoh/E4aJihygcZtqDY3BBZEaE8kHDjQYGte48cFgRpJxeSm/1o1vmoLbxKOxjAC2788f8nKYTz55ENMrywuXwR7kY82LGhtMRIPUiNS8snSSjBcHtGYQFgpIGNRe8mbkCYL+gBfhj2wIx2gcoDqZoUQMxg1505HL28cHey08W6b8k5RtymIgiTOjEe46TuGtD0N4EmI+Huijp65u7AOirKjoeM9neRKCWs6GP/wSR0vgiV9MNmYWTHwDEl3w/iREGSWFlgi0wsv0cirM2c7oOL0ynylH3XH81s4SvKkoUQ9RDioYWZvPq48g2zys97O2g+53Swo7CMrA8KQK69/QLOtqCAsu18WNcM9L9PCv6i8deQbGHsRHPn/cyGPR3lV9UGDw37LJNu8e0np94u0s8SsmRgvk5xZbtC7+t+zNZeZ+mozyrE/utIyKfQCFSWvJe2YQG+aoGQSATqg5m9fh8RKVZkVzW3YNbvRyIsbYuxGPMp/Eg94JcZ/BRkCrFQ1QaQux2ijmuWA6FQ4w4v/hWNgDsL2eEaMw6bfhJWnuriss+PZtxuZzUrz3+9lrldN+ZLKVeCWfnqdBgsmYCQR3YeAQ=
-  file: WonderwareOnlineSDK/bin/Release/netstandard1.1/publish/WonderwareOnlineSDK.dll
+  file: WonderwareOnlineSDK/bin/Release/netstandard1.1/publish/WonderwareOnlineSDK.zip
   on:
     repo: sebcc/WWO-Net-SDK
     tags: true
