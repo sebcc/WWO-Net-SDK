@@ -4,7 +4,7 @@
 
 Wonderware Online .NET SDK
 ==========================
-This SDK helps you create and upload tags to Wonderware Online upload API.
+This SDK helps you create tags and upload data to Wonderware Online through the upload csv/json API.
 
 Requirements
 -----------
