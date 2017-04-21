@@ -19,6 +19,17 @@ Features
 - Caching of data
 - Json format upload
 - Manually purge the cache
+- Supports multi region
+
+Selection of a region
+-----------
+To select a region, simply put the hostname of the targeted region.
+
+```c#
+using WonderwareOnlineSDK;
+...
+var wonderwareOnlineClient = new WonderwareOnlineClient("online.wonderware.com", "PROVIDE TOKEN HERE");
+```
 
 How it works
 -----------

@@ -16,19 +16,19 @@
         private readonly CollectionBuffer<Tag> tagCollectionBuffer;
         private readonly CollectionBuffer<ProcessValue> processValueCollectionBuffer;
 
-        public WonderwareOnlineClient(string key) :
-            this(new WonderwareOnlineUploadApi("online.wonderware.com", key),
+        public WonderwareOnlineClient(string token) :
+            this(new WonderwareOnlineUploadApi("online.wonderware.com", token),
                 new CollectionBuffer<Tag>(),
                 new CollectionBuffer<ProcessValue>(),
-                key)
+                token)
         {
         }
 
-        public WonderwareOnlineClient(string hostname, string key) :
-           this(new WonderwareOnlineUploadApi(hostname, key),
+        public WonderwareOnlineClient(string hostname, string token) :
+           this(new WonderwareOnlineUploadApi(hostname, token),
                new CollectionBuffer<Tag>(),
                new CollectionBuffer<ProcessValue>(),
-               key)
+               token)
         {
         }
 

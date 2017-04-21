@@ -15,7 +15,7 @@ namespace WonderwareOnlineSDK.UnitTests.Backend
             ArgumentException argException = (ArgumentException)null;
             try
             {
-                var client = new WonderwareOnlineUploadApi(null, "key");
+                var client = new WonderwareOnlineUploadApi(null, "token");
             }
             catch (ArgumentException argumentException)
             {
@@ -28,7 +28,7 @@ namespace WonderwareOnlineSDK.UnitTests.Backend
         }
 
         [Fact]
-        public void WonderwareOnlineUploadApi_ConstructorNullKey_Exception()
+        public void WonderwareOnlineUploadApi_ConstructorNullToken_Exception()
         {
             ArgumentException argException = (ArgumentException)null;
             try
@@ -41,8 +41,8 @@ namespace WonderwareOnlineSDK.UnitTests.Backend
             }
 
             Assert.NotNull(argException);
-            Assert.Equal($"Should not be null or empty{Environment.NewLine}Parameter name: key", argException.Message);
-            Assert.Equal("key", argException.ParamName);
+            Assert.Equal($"Should not be null or empty{Environment.NewLine}Parameter name: token", argException.Message);
+            Assert.Equal("token", argException.ParamName);
         }
     }
 }

@@ -19,7 +19,7 @@ namespace WonderwareOnlineSDK.UnitTests
             ArgumentException argException = (ArgumentException)null;
             try
             {
-                var client = new WonderwareOnlineClient("Valid key");
+                var client = new WonderwareOnlineClient("Valid token");
                 client.AddProcessValue(null, new object());
             }
             catch (ArgumentException argumentException)
@@ -38,7 +38,7 @@ namespace WonderwareOnlineSDK.UnitTests
             ArgumentException argException = (ArgumentException)null;
             try
             {
-                var client = new WonderwareOnlineClient("Valid key");
+                var client = new WonderwareOnlineClient("Valid token");
                 client.AddProcessValue("tagName", null);
             }
             catch (ArgumentException argumentException)
@@ -52,7 +52,7 @@ namespace WonderwareOnlineSDK.UnitTests
         }
 
         [Fact]
-        public void WonderwareOnlineClient_Constructor_NullKey()
+        public void WonderwareOnlineClient_Constructor_NullToken()
         {
             ArgumentException argException = (ArgumentException)null;
             try
@@ -65,8 +65,8 @@ namespace WonderwareOnlineSDK.UnitTests
             }
 
             Assert.NotNull(argException);
-            Assert.Equal($"Should not be null or empty{Environment.NewLine}Parameter name: key", argException.Message);
-            Assert.Equal("key", argException.ParamName);
+            Assert.Equal($"Should not be null or empty{Environment.NewLine}Parameter name: token", argException.Message);
+            Assert.Equal("token", argException.ParamName);
         }
 
         [Fact]
@@ -75,7 +75,7 @@ namespace WonderwareOnlineSDK.UnitTests
             ArgumentException argException = (ArgumentException)null;
             try
             {
-                var client = new WonderwareOnlineClient(null, "validKey");
+                var client = new WonderwareOnlineClient(null, "validToken");
             }
             catch (ArgumentException argumentException)
             {
