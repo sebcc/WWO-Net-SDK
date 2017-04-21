@@ -1,5 +1,6 @@
 ﻿namespace WonderwareOnlineSDK.Backend
 {
+    using System;
     using Newtonsoft.Json;
     using System.Net.Http;
     using System.Text;
@@ -7,19 +8,32 @@
 
     internal class WonderwareOnlineUploadApi : IWonderwareOnlineUploadApi
     {
-        private readonly string key;
-        private readonly string uploadApi = "https://online.wonderware.com/apis/upload/datasource";
+        private readonly string token;
+        private readonly string hostname;
+        private readonly string uploadApi;
 
-        public WonderwareOnlineUploadApi(string key)
+        public WonderwareOnlineUploadApi(string hostname, string token)
         {
-            this.key = key;
+            if (string.IsNullOrWhiteSpace(hostname))
+            {
+                throw new ArgumentException("Should not be null or empty", nameof(hostname));
+            }
+
+            if (string.IsNullOrWhiteSpace(token))
+            {
+                throw new ArgumentException("Should not be null or empty", nameof(token));
+            }
+
+            this.token = token;
+            this.hostname = hostname;
+            this.uploadApi = $"https://{hostname}/apis/upload/datasource";
         }
 
         public async Task SendTagAsync(TagUploadRequest tagUploadRequest)
         {
             using (var client = new HttpClient())
             {
-                client.DefaultRequestHeaders.Add("Authorization", $"{this.key}");
+                client.DefaultRequestHeaders.Add("Authorization", $"{this.token}");
 
                 var result = await client.PostAsync(uploadApi,
                     new StringContent(JsonConvert.SerializeObject(tagUploadRequest), Encoding.UTF8, "application/json"));
@@ -32,7 +46,7 @@
         {
             using (var client = new HttpClient())
             {
-                client.DefaultRequestHeaders.Add("Authorization", $"{this.key}");
+                client.DefaultRequestHeaders.Add("Authorization", $"{this.token}");
 
                 var result = await client.PostAsync(uploadApi,
                     new StringContent(JsonConvert.SerializeObject(dataUploadRequest), Encoding.UTF8, "application/json"));

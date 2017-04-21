@@ -16,22 +16,28 @@
         private readonly CollectionBuffer<Tag> tagCollectionBuffer;
         private readonly CollectionBuffer<ProcessValue> processValueCollectionBuffer;
 
-        public WonderwareOnlineClient(string key) : 
-            this(new WonderwareOnlineUploadApi(key), new CollectionBuffer<Tag>(), new CollectionBuffer<ProcessValue>(),  key)
+        public WonderwareOnlineClient(string token) :
+            this(new WonderwareOnlineUploadApi("online.wonderware.com", token),
+                new CollectionBuffer<Tag>(),
+                new CollectionBuffer<ProcessValue>(),
+                token)
+        {
+        }
+
+        public WonderwareOnlineClient(string hostname, string token) :
+           this(new WonderwareOnlineUploadApi(hostname, token),
+               new CollectionBuffer<Tag>(),
+               new CollectionBuffer<ProcessValue>(),
+               token)
         {
         }
 
         internal WonderwareOnlineClient(
-            IWonderwareOnlineUploadApi wonderwareOnlineUploadApi, 
-            CollectionBuffer<Tag> tagBuffer, 
+            IWonderwareOnlineUploadApi wonderwareOnlineUploadApi,
+            CollectionBuffer<Tag> tagBuffer,
             CollectionBuffer<ProcessValue> processValueBuffer,
-             string key)
+            string key)
         {
-            if (string.IsNullOrWhiteSpace(key))
-            {
-                throw new ArgumentException("Should not be null or empty", nameof(key));
-            }
-
             this.wonderwareOnlineUploadApi = wonderwareOnlineUploadApi;
             this.tagCollectionBuffer = tagBuffer;
             this.processValueCollectionBuffer = processValueBuffer;

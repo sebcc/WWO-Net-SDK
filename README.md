@@ -19,11 +19,22 @@ Features
 - Caching of data
 - Json format upload
 - Manually purge the cache
+- Supports multi region
 
 How it works
 -----------
 - Create a CSV/JSON datasources from [Wonderware Online Datasource](https://online.wonderware.com/DataSourceManagement) 
 - Take the token key and provide it to the WonderwareOnlineClient
+
+Selection of a region
+-----------
+To select a region, simply put the hostname of the targeted region.
+
+```c#
+using WonderwareOnlineSDK;
+...
+var wonderwareOnlineClient = new WonderwareOnlineClient("online.wonderware.com", "PROVIDE TOKEN HERE");
+```
 
 Unsupported
 -----------
