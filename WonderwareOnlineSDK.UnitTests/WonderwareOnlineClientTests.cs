@@ -52,6 +52,42 @@ namespace WonderwareOnlineSDK.UnitTests
         }
 
         [Fact]
+        public void WonderwareOnlineClient_Constructor_NullKey()
+        {
+            ArgumentException argException = (ArgumentException)null;
+            try
+            {
+                var client = new WonderwareOnlineClient(null);
+            }
+            catch (ArgumentException argumentException)
+            {
+                argException = argumentException;
+            }
+
+            Assert.NotNull(argException);
+            Assert.Equal($"Should not be null or empty{Environment.NewLine}Parameter name: key", argException.Message);
+            Assert.Equal("key", argException.ParamName);
+        }
+
+        [Fact]
+        public void WonderwareOnlineClient_ConstructorNullHost_ExpectException()
+        {
+            ArgumentException argException = (ArgumentException)null;
+            try
+            {
+                var client = new WonderwareOnlineClient(null, "validKey");
+            }
+            catch (ArgumentException argumentException)
+            {
+                argException = argumentException;
+            }
+
+            Assert.NotNull(argException);
+            Assert.Equal($"Should not be null or empty{Environment.NewLine}Parameter name: hostname", argException.Message);
+            Assert.Equal("hostname", argException.ParamName);
+        }
+
+        [Fact]
         public void WonderwareOnlineClient_SendTagNullArgument_ExpectException()
         {
             ArgumentException argException = (ArgumentException)null;

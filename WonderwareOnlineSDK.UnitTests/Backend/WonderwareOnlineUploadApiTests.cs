@@ -23,25 +23,7 @@ namespace WonderwareOnlineSDK.UnitTests.Backend
             }
 
             Assert.NotNull(argException);
-            Assert.Equal($"Should not be null or empty or start with 'online.wonderware'{Environment.NewLine}Parameter name: hostname", argException.Message);
-            Assert.Equal("hostname", argException.ParamName);
-        }
-
-        [Fact]
-        public void WonderwareOnlineUploadApi_ConstructorInvalidHost_Exception()
-        {
-            ArgumentException argException = (ArgumentException)null;
-            try
-            {
-                var client = new WonderwareOnlineUploadApi("test.com", "key");
-            }
-            catch (ArgumentException argumentException)
-            {
-                argException = argumentException;
-            }
-
-            Assert.NotNull(argException);
-            Assert.Equal($"Should not be null or empty or start with 'online.wonderware'{Environment.NewLine}Parameter name: hostname", argException.Message);
+            Assert.Equal($"Should not be null or empty{Environment.NewLine}Parameter name: hostname", argException.Message);
             Assert.Equal("hostname", argException.ParamName);
         }
 

@@ -14,9 +14,9 @@
 
         public WonderwareOnlineUploadApi(string hostname, string key)
         {
-            if (string.IsNullOrWhiteSpace(hostname) || !hostname.StartsWith("online.wonderware"))
+            if (string.IsNullOrWhiteSpace(hostname))
             {
-                throw new ArgumentException("Should not be null or empty or start with 'online.wonderware'", nameof(hostname));
+                throw new ArgumentException("Should not be null or empty", nameof(hostname));
             }
 
             if (string.IsNullOrWhiteSpace(key))
