@@ -47,19 +47,44 @@
             this.purgeTask = new PurgeTask(cancellationTokenSource.Token, 5000, PurgeAsync);
         }
 
-        public void AddProcessValue(string tagName, object value)
+        public void AddProcessValue(string tagName, string value)
         {
-            if (string.IsNullOrWhiteSpace(tagName))
-            {
-                throw new ArgumentException("TagName should not be null or empty", nameof(tagName));
-            }
+            this.InternalAddProcessValue(tagName, value);
+        }
 
-            if (value == null)
-            {
-                throw new ArgumentException("Value should not be null or empty", nameof(value));
-            }
+        public void AddProcessValue(string tagName, byte value)
+        {
+            this.InternalAddProcessValue(tagName, value);
+        }
 
-            this.processValueCollectionBuffer.AddItem(new ProcessValue() { TagName = tagName, Timestamp = DateTime.UtcNow, Value = value });
+        public void AddProcessValue(string tagName, short value)
+        {
+            this.InternalAddProcessValue(tagName, value);
+        }
+
+        public void AddProcessValue(string tagName, ushort value)
+        {
+            this.InternalAddProcessValue(tagName, value);
+        }
+
+        public void AddProcessValue(string tagName, int value)
+        {
+            this.InternalAddProcessValue(tagName, value);
+        }
+
+        public void AddProcessValue(string tagName, uint value)
+        {
+            this.InternalAddProcessValue(tagName, value);
+        }
+
+        public void AddProcessValue(string tagName, float value)
+        {
+            this.InternalAddProcessValue(tagName, value);
+        }
+
+        public void AddProcessValue(string tagName, double value)
+        {
+            this.InternalAddProcessValue(tagName, value);
         }
 
         public void AddTag(Tag tag)
@@ -76,6 +101,21 @@
         {
             await PurgeTagCollectionAsync(this.tagCollectionBuffer.ExtractBuffer());
             await PurgeProcessValuesCollectionAsync(this.processValueCollectionBuffer.ExtractBuffer());
+        }
+
+        private void InternalAddProcessValue(string tagName, object value)
+        {
+            if (string.IsNullOrWhiteSpace(tagName))
+            {
+                throw new ArgumentException("TagName should not be null or empty", nameof(tagName));
+            }
+
+            if (value == null)
+            {
+                throw new ArgumentException("Value should not be null or empty", nameof(value));
+            }
+
+            this.processValueCollectionBuffer.AddItem(new ProcessValue() { TagName = tagName, Timestamp = DateTime.UtcNow, Value = value });
         }
 
         private async Task PurgeTagCollectionAsync(IEnumerable<Tag> tagsBuffer)

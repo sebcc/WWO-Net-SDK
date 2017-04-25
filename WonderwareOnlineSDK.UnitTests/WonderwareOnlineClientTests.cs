@@ -20,7 +20,7 @@ namespace WonderwareOnlineSDK.UnitTests
             try
             {
                 var client = new WonderwareOnlineClient("Valid token");
-                client.AddProcessValue(null, new object());
+                client.AddProcessValue(null, "randomString");
             }
             catch (ArgumentException argumentException)
             {
