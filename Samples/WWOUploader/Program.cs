@@ -21,8 +21,11 @@
 
             try
             {
-                wonderwareOnlineClient.AddTag(tag);
-                Console.WriteLine($"Successfully created tag - {tag.TagName}.");
+                for (int i = 0; i < 100; i++)
+                {
+                    wonderwareOnlineClient.AddTag(tag);
+                    Console.WriteLine($"Successfully created tag - {tag.TagName}.");
+                }
             }
             catch (Exception ex)
             {
@@ -31,12 +34,12 @@
 
             try
             {
-                for(int i = 0; i<5; i++)
+                for (int i = 0; i < 1000; i++)
                 {
-                    wonderwareOnlineClient.AddProcessValue(tag.TagName, stopWatch.ElapsedMilliseconds + i);   
-                    Thread.Sleep(10);
+                    wonderwareOnlineClient.AddProcessValue(tag.TagName, 1);
+                    Thread.Sleep(1);
                 }
-                
+
                 Console.WriteLine($"Successfully created process values.");
             }
             catch (Exception ex)
@@ -44,6 +47,7 @@
                 Console.WriteLine("Could not add process value. Ex.:" + ex);
             }
 
+            // There is an automatic purge. This is only to manually purge the buffer
             try
             {
                 var purgeTask = wonderwareOnlineClient.PurgeAsync();
