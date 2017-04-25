@@ -5,8 +5,9 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Text.RegularExpressions;
+    using System.Threading;
     using System.Threading.Tasks;
+    using BackgroundTasks;
     using Helpers;
 
     public class WonderwareOnlineClient
@@ -15,6 +16,8 @@
 
         private readonly CollectionBuffer<Tag> tagCollectionBuffer;
         private readonly CollectionBuffer<ProcessValue> processValueCollectionBuffer;
+        private readonly CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+        private PurgeTask purgeTask;
 
         public WonderwareOnlineClient(string token) :
             this(new WonderwareOnlineUploadApi("online.wonderware.com", token),
@@ -41,6 +44,7 @@
             this.wonderwareOnlineUploadApi = wonderwareOnlineUploadApi;
             this.tagCollectionBuffer = tagBuffer;
             this.processValueCollectionBuffer = processValueBuffer;
+            this.purgeTask = new PurgeTask(cancellationTokenSource.Token, 5000, PurgeAsync);
         }
 
         public void AddProcessValue(string tagName, object value)
@@ -83,14 +87,20 @@
                 tagUploadRequest.metadata.Add(tag);
             }
 
-            await this.wonderwareOnlineUploadApi.SendTagAsync(tagUploadRequest);
+            if (tagUploadRequest.metadata.Any())
+            {
+                await this.wonderwareOnlineUploadApi.SendTagAsync(tagUploadRequest);
+            }
         }
 
         private async Task PurgeProcessValuesCollectionAsync(IEnumerable<ProcessValue> processValuesBuffer)
         {
             var request = Converter.ConvertFromBuffer(processValuesBuffer);
 
-            await this.wonderwareOnlineUploadApi.SendValueAsync(request);
+            if (request.data.Any())
+            {
+                await this.wonderwareOnlineUploadApi.SendValueAsync(request);
+            }
         }
     }
 }

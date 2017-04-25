@@ -18,7 +18,7 @@ Features
 -----------
 - Caching of data
 - Json format upload
-- Manually purge the cache
+- Automatic/Manually purge the cache
 - Supports multi region
 
 How it works
@@ -34,6 +34,17 @@ To select a region, simply put the hostname of the targeted region.
 using WonderwareOnlineSDK;
 ...
 var wonderwareOnlineClient = new WonderwareOnlineClient("online.wonderware.com", "PROVIDE TOKEN HERE");
+```
+
+Automatic/manual purge
+-----------
+By default, the sdk will automatically purge the data every 5 seconds.  There is also a manual purge that is available.
+
+```c#
+using WonderwareOnlineSDK;
+...
+var wonderwareOnlineClient = new WonderwareOnlineClient("online.wonderware.com", "PROVIDE TOKEN HERE");
+wonderwareOnlineClient.PurgeAsync();
 ```
 
 Unsupported

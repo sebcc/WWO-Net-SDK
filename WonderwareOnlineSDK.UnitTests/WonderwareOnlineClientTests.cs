@@ -132,5 +132,28 @@ namespace WonderwareOnlineSDK.UnitTests
             apiMock.Verify(a => a.SendTagAsync(It.Is<TagUploadRequest>(t => t.metadata.Count == 1)), Times.Once);
             apiMock.Verify(a => a.SendValueAsync(It.Is<DataUploadRequest>(d => d.data.Count == 2)), Times.Once);
         }
+
+        [Fact]
+        public async Task WonderwareOnlineClient_PurgeNoData_ExpectNoApiCall()
+        {
+            // SETUP
+            var tags = new List<Tag>();
+
+            var processValues = new List<ProcessValue>();
+
+            var tagBuffer = new CollectionBufferMoq<Tag>(tags.ToArray());
+            var processValueBuffer = new CollectionBufferMoq<ProcessValue>(processValues.ToArray());
+            var apiMock = new Mock<IWonderwareOnlineUploadApi>();
+
+            // ACTION
+            var client = new WonderwareOnlineClient(apiMock.Object, tagBuffer, processValueBuffer, "Valid Key");
+            await client.PurgeAsync();
+
+            // ASSERT
+            Assert.Equal(0, tagBuffer.ItemCount);
+            Assert.Equal(0, processValueBuffer.ItemCount);
+            apiMock.Verify(a => a.SendTagAsync(It.IsAny<TagUploadRequest>()), Times.Never);
+            apiMock.Verify(a => a.SendValueAsync(It.IsAny<DataUploadRequest>()), Times.Never);
+        }
     }
 }
