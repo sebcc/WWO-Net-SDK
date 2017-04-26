@@ -20,6 +20,7 @@ Features
 - Json format upload
 - Automatic/Manually purge the cache
 - Supports multi region
+- Limited supports of process value types [Supported values](https://online.wonderware.com/Help/#324169.htm)
 
 How it works
 -----------
