@@ -23,6 +23,7 @@ namespace WonderwareOnlineSDK.UnitTests.Models
             Assert.Equal(default(double), tag.RolloverValue);
             Assert.Equal(default(double), tag.IntegralDivisor);
             Assert.Equal(default(InterpolationType),tag.InterpolationType);
+            Assert.Equal(default(DataType),tag.DataType);            
         }
     }
 }

@@ -24,7 +24,7 @@
         {
             var tag = new Tag();
             tag.TagName = tagName;
-            tag.DataType = DataType.Float;
+            tag.DataType = DataType.Double;
             tag.Min = 0;
             tag.Max = 100;
             
