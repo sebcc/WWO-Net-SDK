@@ -1,7 +1,6 @@
 namespace WonderwareOnlineSDK.UnitTests
 {
     using Backend;
-    using Models;
     using Moq;
     using Moqs;
     using System;
@@ -9,6 +8,7 @@ namespace WonderwareOnlineSDK.UnitTests
     using System.Threading.Tasks;
     using System.Collections.Generic;
     using WonderwareOnlineSDK.Backend;
+    using WonderwareOnlineSDK.Models;
     using Xunit;
 
     public class WonderwareOnlineClientTests

@@ -3,10 +3,10 @@ namespace WonderwareOnlineSDK.UnitTests.Helpers
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Models;
     using Moqs;
     using Xunit;
     using WonderwareOnlineSDK.Helpers;
+    using WonderwareOnlineSDK.Models;
 
     public class ConverterTests
     {
