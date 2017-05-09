@@ -2,6 +2,7 @@
 {
     using System;
     using Newtonsoft.Json;
+    using Newtonsoft.Json.Converters;    
     using System.Net.Http;
     using System.Text;
     using System.Threading.Tasks;
@@ -36,7 +37,7 @@
                 client.DefaultRequestHeaders.Add("Authorization", $"{this.token}");
 
                 var result = await client.PostAsync(uploadApi,
-                    new StringContent(JsonConvert.SerializeObject(tagUploadRequest), Encoding.UTF8, "application/json"));
+                    new StringContent(JsonConvert.SerializeObject(tagUploadRequest, new StringEnumConverter()), Encoding.UTF8, "application/json"));
 
                 result.EnsureSuccessStatusCode();
             }

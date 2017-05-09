@@ -3,9 +3,9 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Models;
     using Moqs;
     using Xunit;
+    using WonderwareOnlineSDK.Models;
 
     public class CollectionBufferTests
     {
