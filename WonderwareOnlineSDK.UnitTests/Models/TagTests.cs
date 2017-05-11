@@ -11,9 +11,9 @@ namespace WonderwareOnlineSDK.UnitTests.Models
     public class TagTests
     {
         [Fact]
-        public void Tag_CreateDefault_Success()
+        public void Tag_DefaultValue_Success()
         {
-            var tag = Tag.CreateDefault("default_Name");
+            var tag = new Tag("default_Name");
 
             Assert.Equal(0, tag.Min);
             Assert.Equal(100, tag.Max);

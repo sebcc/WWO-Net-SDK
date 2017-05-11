@@ -1,7 +1,21 @@
-﻿namespace WonderwareOnlineSDK.Models
+﻿using System.Collections.Generic;
+
+namespace WonderwareOnlineSDK.Models
 {
     public class Tag
     {
+        public Tag() : this(string.Empty)
+        {
+        }
+
+        public Tag(string tagName)
+        {
+            this.TagName = tagName;
+            this.DataType = DataType.Double;
+            this.Min = 0;
+            this.Max = 100;
+        }
+
         public string TagName { get; set; }
 
         public string EngUnit { get; set; }
@@ -20,15 +34,11 @@
 
         public double RolloverValue { get; set; }
 
-        public static Tag CreateDefault(string tagName)
+        private Dictionary<string, TagExtendedPropertyValue> tagExtendedProperties = new Dictionary<string, TagExtendedPropertyValue>();
+
+        public void AddTagExtendedProperty (string newProperty, string dataType, object value)
         {
-            var tag = new Tag();
-            tag.TagName = tagName;
-            tag.DataType = DataType.Double;
-            tag.Min = 0;
-            tag.Max = 100;
-            
-            return tag;
+            this.tagExtendedProperties.Add(newProperty, new TagExtendedPropertyValue(){ DataType = dataType, Value = value });
         }
     }
 }
