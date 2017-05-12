@@ -15,13 +15,13 @@ namespace WonderwareOnlineSDK.UnitTests.Models
         {
             var tag = new Tag("default_Name");
 
-            Assert.Equal(0, tag.Min);
-            Assert.Equal(100, tag.Max);
+            Assert.Equal(double.NaN, tag.Min);
+            Assert.Equal(double.NaN, tag.Max);
             Assert.Equal("default_Name", tag.TagName);
             Assert.Null(tag.Description);
             Assert.Null(tag.EngUnit);
-            Assert.Equal(default(double), tag.RolloverValue);
-            Assert.Equal(default(double), tag.IntegralDivisor);
+            Assert.Equal(double.NaN, tag.RolloverValue);
+            Assert.Equal(double.NaN, tag.IntegralDivisor);
             Assert.Equal(default(InterpolationType),tag.InterpolationType);
             Assert.Equal(default(DataType),tag.DataType);            
         }

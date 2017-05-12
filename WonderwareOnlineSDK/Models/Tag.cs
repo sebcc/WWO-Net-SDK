@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Linq;
+using System.Reflection;
+using System.Collections.Generic;
 
 namespace WonderwareOnlineSDK.Models
 {
@@ -12,8 +15,10 @@ namespace WonderwareOnlineSDK.Models
         {
             this.TagName = tagName;
             this.DataType = DataType.Double;
-            this.Min = 0;
-            this.Max = 100;
+            this.Min = double.NaN;
+            this.Max = double.NaN;
+            this.IntegralDivisor = double.NaN;
+            this.RolloverValue = double.NaN;
         }
 
         public string TagName { get; set; }
@@ -39,6 +44,27 @@ namespace WonderwareOnlineSDK.Models
         public void AddTagExtendedProperty (string newProperty, string dataType, object value)
         {
             this.tagExtendedProperties.Add(newProperty, new TagExtendedPropertyValue(){ DataType = dataType, Value = value });
+        }
+
+        public Dictionary<string, object> ToDictionary()
+        {
+            var valueToReturn = new Dictionary<string,object>();
+            valueToReturn.Add("TagName", this.TagName);
+            valueToReturn.Add("Min", this.Min);
+            valueToReturn.Add("Max", this.Max);
+            valueToReturn.Add("Description", this.Description);
+            valueToReturn.Add("EngUnit", this.EngUnit);
+            valueToReturn.Add("DataType", this.DataType.ToString());
+            valueToReturn.Add("InterpolationType", this.InterpolationType.ToString());
+            valueToReturn.Add("IntegralDivisor", this.IntegralDivisor);
+            valueToReturn.Add("RolloverValue", this.RolloverValue);
+            
+            foreach(var tagExtendedProperty in this.tagExtendedProperties)
+            {
+                valueToReturn.Add(tagExtendedProperty.Key, tagExtendedProperty.Value);
+            }
+
+            return valueToReturn;
         }
     }
 }

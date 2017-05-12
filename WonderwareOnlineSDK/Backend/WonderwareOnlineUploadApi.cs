@@ -6,6 +6,7 @@
     using System.Net.Http;
     using System.Text;
     using System.Threading.Tasks;
+    using Helpers;
 
     internal class WonderwareOnlineUploadApi : IWonderwareOnlineUploadApi
     {
@@ -37,7 +38,7 @@
                 client.DefaultRequestHeaders.Add("Authorization", $"{this.token}");
 
                 var result = await client.PostAsync(uploadApi,
-                    new StringContent(JsonConvert.SerializeObject(tagUploadRequest, new StringEnumConverter()), Encoding.UTF8, "application/json"));
+                    new StringContent(Serializer.Serialize(tagUploadRequest), Encoding.UTF8, "application/json"));
 
                 result.EnsureSuccessStatusCode();
             }
