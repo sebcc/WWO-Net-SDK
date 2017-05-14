@@ -4,7 +4,7 @@
 
 Wonderware Online .NET SDK
 ==========================
-This SDK helps you create tags and upload data to Wonderware Online through the upload csv/json API.
+This SDK helps you create tags and upload data to [Wonderware Online](https://online.wonderware.com) through the upload csv/json API.
 
 Requirements
 -----------
@@ -16,9 +16,9 @@ Supported
 
 Features
 -----------
-- Caching of data
+- Buffered data transmission
 - Json format upload
-- Automatic/Manually purge the cache
+- Automatic/Manually buffer flush
 - Supports multi region
 - Limited supports of process value types [Supported values](https://online.wonderware.com/Help/#324169.htm)
 - Tag extended properties
@@ -38,9 +38,9 @@ using WonderwareOnlineSDK;
 var wonderwareOnlineClient = new WonderwareOnlineClient("online.wonderware.com", "PROVIDE TOKEN HERE");
 ```
 
-Automatic/manual purge
+Automatic/manual flush
 -----------
-By default, the sdk will automatically purge the data every 5 seconds.  There is also a manual purge that is available.
+By default, the sdk will automatically flush the data every 5 seconds.  There is also a manual flush that is available.
 
 ```c#
 using WonderwareOnlineSDK;
