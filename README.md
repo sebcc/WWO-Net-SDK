@@ -21,6 +21,7 @@ Features
 - Automatic/Manually purge the cache
 - Supports multi region
 - Limited supports of process value types [Supported values](https://online.wonderware.com/Help/#324169.htm)
+- Tag extended properties
 
 How it works
 -----------

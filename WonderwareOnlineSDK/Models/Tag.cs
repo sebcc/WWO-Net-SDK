@@ -43,6 +43,11 @@ namespace WonderwareOnlineSDK.Models
 
         public void AddTagExtendedProperty(string newProperty, string value)
         {
+            if (value.Length > 512)
+            {
+                throw new NotSupportedException("Value is too long.");                
+            }
+
             this.AddTagExtendedProperty(newProperty, "String", value);
         }
 
@@ -93,6 +98,11 @@ namespace WonderwareOnlineSDK.Models
                 newProperty.Equals("IntegralDivisor",StringComparison.OrdinalIgnoreCase))
             {
                 throw new NotSupportedException("This is a reserved property.");
+            }
+
+            if (newProperty.Length > 50)
+            {
+                throw new NotSupportedException("Property name too long.");
             }
 
             this.tagExtendedProperties.Add(newProperty, new TagExtendedPropertyValue(){ DataType = dataType, Value = value });

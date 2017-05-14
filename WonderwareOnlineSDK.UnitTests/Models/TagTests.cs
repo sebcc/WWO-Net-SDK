@@ -1,6 +1,7 @@
 namespace WonderwareOnlineSDK.UnitTests.Models
 {
     using System;
+    using System.Text;
     using System.Collections.Generic;
     using System.Linq;
     using Moqs;
@@ -60,7 +61,52 @@ namespace WonderwareOnlineSDK.UnitTests.Models
             }
 
             Assert.NotNull(exception);           
-                
+            Assert.Equal("This is a reserved property.", exception.Message);         
+        }
+
+        [Fact]
+        public void Tag_PropertyNameTooLong_ExpectException()
+        {
+            var tag = new Tag("default_Name");
+            NotSupportedException exception = null;
+
+            try
+            {
+                tag.AddTagExtendedProperty(GenerateStringWithLength(51), "SSS");
+            }
+            catch(NotSupportedException nse)
+            {
+                exception = nse;
+            }
+
+            Assert.NotNull(exception);  
+            Assert.Equal("Property name too long.", exception.Message);         
+        }
+
+        [Fact]
+        public void Tag_StringPropertyValueTooLong_ExpectException()
+        {
+            var tag = new Tag("default_Name");
+            NotSupportedException exception = null;
+
+            try
+            {
+                tag.AddTagExtendedProperty("good_property", GenerateStringWithLength(513));
+            }
+            catch(NotSupportedException nse)
+            {
+                exception = nse;
+            }
+
+            Assert.NotNull(exception);  
+            Assert.Equal("Value is too long.", exception.Message);         
+        }
+
+        private string GenerateStringWithLength(int length)
+        {
+            var builder = new StringBuilder();
+            builder.Append('s', length);
+            return builder.ToString();
         }
     }
 }
