@@ -46,7 +46,7 @@ By default, the sdk will automatically flush the data every 5 seconds.  There is
 using WonderwareOnlineSDK;
 ...
 var wonderwareOnlineClient = new WonderwareOnlineClient("online.wonderware.com", "PROVIDE TOKEN HERE");
-wonderwareOnlineClient.PurgeAsync();
+wonderwareOnlineClient.SendAsync();
 ```
 
 Unsupported
