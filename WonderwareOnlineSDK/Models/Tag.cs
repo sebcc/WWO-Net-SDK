@@ -41,8 +41,60 @@ namespace WonderwareOnlineSDK.Models
 
         private Dictionary<string, TagExtendedPropertyValue> tagExtendedProperties = new Dictionary<string, TagExtendedPropertyValue>();
 
-        public void AddTagExtendedProperty (string newProperty, string dataType, object value)
+        public void AddTagExtendedProperty(string newProperty, string value)
         {
+            this.AddTagExtendedProperty(newProperty, "String", value);
+        }
+
+        public void AddTagExtendedProperty(string newProperty, short value)
+        {
+            this.AddTagExtendedProperty(newProperty, "Int16", value);
+        }
+
+        public void AddTagExtendedProperty(string newProperty, int value)
+        {
+            this.AddTagExtendedProperty(newProperty, "Int32", value);
+        }
+
+        public void AddTagExtendedProperty(string newProperty, long value)
+        {
+            this.AddTagExtendedProperty(newProperty, "Int64", value);
+        }
+        public void AddTagExtendedProperty(string newProperty, Guid value)
+        {
+            this.AddTagExtendedProperty(newProperty, "Guid", value);
+        }
+
+        public void AddTagExtendedProperty(string newProperty, DateTimeOffset value)
+        {
+            this.AddTagExtendedProperty(newProperty, "DateTimeOffset", value);
+        }
+
+        public void AddTagExtendedProperty(string newProperty, double value)
+        {
+            this.AddTagExtendedProperty(newProperty, "Double", value);
+        }
+
+        public void AddTagExtendedProperty(string newProperty, bool value)
+        {
+            this.AddTagExtendedProperty(newProperty, "Boolean", value);
+        }
+
+        private void AddTagExtendedProperty (string newProperty, string dataType, object value)
+        {
+            if (newProperty.Equals("TagName",StringComparison.OrdinalIgnoreCase)||
+                newProperty.Equals("Description",StringComparison.OrdinalIgnoreCase)||
+                newProperty.Equals("EngUnit",StringComparison.OrdinalIgnoreCase)||
+                newProperty.Equals("DataType",StringComparison.OrdinalIgnoreCase)||
+                newProperty.Equals("Min",StringComparison.OrdinalIgnoreCase)||
+                newProperty.Equals("Max",StringComparison.OrdinalIgnoreCase)||
+                newProperty.Equals("InterpolationType",StringComparison.OrdinalIgnoreCase)||
+                newProperty.Equals("RolloverValue",StringComparison.OrdinalIgnoreCase)||
+                newProperty.Equals("IntegralDivisor",StringComparison.OrdinalIgnoreCase))
+            {
+                throw new NotSupportedException("This is a reserved property.");
+            }
+
             this.tagExtendedProperties.Add(newProperty, new TagExtendedPropertyValue(){ DataType = dataType, Value = value });
         }
 

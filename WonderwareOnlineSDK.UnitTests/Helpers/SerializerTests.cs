@@ -15,13 +15,13 @@ namespace WonderwareOnlineSDK.UnitTests.Helpers
         public void Serializer_TagRequestSerializer_ExtendedProperty()
         {
             var tag = new Tag("tag1");
-            tag.AddTagExtendedProperty("prop1","string","object");
+            tag.AddTagExtendedProperty("prop1","object");
             var tagRequest = new TagUploadRequest();
             tagRequest.metadata.Add(tag);
 
 
             var result = Serializer.Serialize(tagRequest);
-            Assert.Equal("{\"metadata\":[{\"TagName\":\"tag1\",\"DataType\":\"Double\",\"InterpolationType\":\"Linear\",\"prop1\":{\"DataType\":\"string\",\"Value\":\"object\"}}]}",result);
+            Assert.Equal("{\"metadata\":[{\"TagName\":\"tag1\",\"DataType\":\"Double\",\"InterpolationType\":\"Linear\",\"prop1\":{\"DataType\":\"String\",\"Value\":\"object\"}}]}",result);
             
         }
 

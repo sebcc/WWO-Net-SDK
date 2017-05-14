@@ -25,5 +25,42 @@ namespace WonderwareOnlineSDK.UnitTests.Models
             Assert.Equal(default(InterpolationType),tag.InterpolationType);
             Assert.Equal(default(DataType),tag.DataType);            
         }
+
+        [Theory]
+        [InlineData("TagName")]
+        [InlineData("Description")]
+        [InlineData("Min")]
+        [InlineData("Max")]
+        [InlineData("DataType")]
+        [InlineData("InterpolationType")]
+        [InlineData("RolloverValue")]
+        [InlineData("EngUnit")]
+        [InlineData("IntegralDivisor")]
+        [InlineData("TagNAME")]
+        [InlineData("DescrIPtion")]
+        [InlineData("MIN")]
+        [InlineData("mAX")]
+        [InlineData("DATAType")]
+        [InlineData("InterpolationType")]
+        [InlineData("RollOverValue")]
+        [InlineData("engUnit")]
+        [InlineData("integraldivisor")]
+        public void Tag_ExtendedPropertiesReservedPropertie_ExpectException(string prop)
+        {
+            var tag = new Tag("default_Name");
+            NotSupportedException exception = null;
+
+            try
+            {
+                tag.AddTagExtendedProperty(prop, "SSS");
+            }
+            catch(NotSupportedException nse)
+            {
+                exception = nse;
+            }
+
+            Assert.NotNull(exception);           
+                
+        }
     }
 }
