@@ -20,7 +20,8 @@ Features
 - Json format upload
 - Automatic/Manually buffer flush
 - Supports multi region
-- Limited support of process value types [Supported values](https://online.wonderware.com/Help/#324169.htm)
+- Limited supports of process value types [Supported values](https://online.wonderware.com/Help/#324169.htm)
+- Tag extended properties
 
 How it works
 -----------
