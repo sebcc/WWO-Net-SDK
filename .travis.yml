@@ -11,7 +11,7 @@ script:
 - dotnet test WonderwareOnlineSDK.UnitTests/WonderwareOnlineSDK.UnitTests.csproj
 - dotnet pack WonderwareOnlineSDK/WonderwareOnlineSDK.csproj -c Release
 before_deploy:
-  - export RELEASE_PKG_FILE=$(ls onderwareOnlineSDK/bin/Release/*.nupkg)
+  - export RELEASE_PKG_FILE=$(ls WonderwareOnlineSDK/bin/Release/*.nupkg)
 deploy:
   provider: releases
   skip_cleanup: true
