@@ -19,6 +19,10 @@
         private readonly CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
         private PurgeTask purgeTask;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WonderwareOnlineClient"/> class.
+        /// </summary>
+        /// <param name="token">DataSource token</param>
         public WonderwareOnlineClient(string token) :
             this(new WonderwareOnlineUploadApi("online.wonderware.com", token),
                 new CollectionBuffer<Tag>(),
@@ -27,6 +31,11 @@
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WonderwareOnlineClient"/> class.
+        /// </summary>
+        /// <param name="hostname">Host name</param>
+        /// <param name="token">DataSource token</param>
         public WonderwareOnlineClient(string hostname, string token) :
            this(new WonderwareOnlineUploadApi(hostname, token),
                new CollectionBuffer<Tag>(),
@@ -47,46 +56,90 @@
             this.purgeTask = new PurgeTask(cancellationTokenSource.Token, 5000, PurgeAsync);
         }
 
+        /// <summary>
+        /// Add a process value
+        /// </summary>
+        /// <param name="tagName">Name of the tag associated</param>
+        /// <param name="value">Vallue to add</param>
         public void AddProcessValue(string tagName, string value)
         {
             this.InternalAddProcessValue(tagName, value);
         }
 
+        /// <summary>
+        /// Add a process value
+        /// </summary>
+        /// <param name="tagName">Name of the tag associated</param>
+        /// <param name="value">Vallue to add</param>
         public void AddProcessValue(string tagName, byte value)
         {
             this.InternalAddProcessValue(tagName, value);
         }
 
+        /// <summary>
+        /// Add a process value
+        /// </summary>
+        /// <param name="tagName">Name of the tag associated</param>
+        /// <param name="value">Vallue to add</param>
         public void AddProcessValue(string tagName, short value)
         {
             this.InternalAddProcessValue(tagName, value);
         }
 
+        /// <summary>
+        /// Add a process value
+        /// </summary>
+        /// <param name="tagName">Name of the tag associated</param>
+        /// <param name="value">Vallue to add</param>
         public void AddProcessValue(string tagName, ushort value)
         {
             this.InternalAddProcessValue(tagName, value);
         }
 
+        /// <summary>
+        /// Add a process value
+        /// </summary>
+        /// <param name="tagName">Name of the tag associated</param>
+        /// <param name="value">Vallue to add</param>
         public void AddProcessValue(string tagName, int value)
         {
             this.InternalAddProcessValue(tagName, value);
         }
 
+        /// <summary>
+        /// Add a process value
+        /// </summary>
+        /// <param name="tagName">Name of the tag associated</param>
+        /// <param name="value">Vallue to add</param>
         public void AddProcessValue(string tagName, uint value)
         {
             this.InternalAddProcessValue(tagName, value);
         }
 
+        /// <summary>
+        /// /// Add a process value
+        /// </summary>
+        /// <param name="tagName">Name of the tag associated</param>
+        /// <param name="value">Vallue to add</param>
         public void AddProcessValue(string tagName, float value)
         {
             this.InternalAddProcessValue(tagName, value);
         }
 
+        /// <summary>
+        /// Add a process value
+        /// </summary>
+        /// <param name="tagName">Name of the tag associated</param>
+        /// <param name="value">Vallue to add</param>
         public void AddProcessValue(string tagName, double value)
         {
             this.InternalAddProcessValue(tagName, value);
         }
 
+        /// <summary>
+        /// Add a tag
+        /// </summary>
+        /// <param name="tag">Tag to add</param>
         public void AddTag(Tag tag)
         {
             if (tag == null)
@@ -97,10 +150,30 @@
             this.tagCollectionBuffer.AddItem(tag);
         }
 
+        /// <summary>
+        /// Asynchronously send the buffered data 
+        /// </summary>
+        /// <returns></returns>
         public async Task PurgeAsync()
         {
             await PurgeTagCollectionAsync(this.tagCollectionBuffer.ExtractBuffer());
             await PurgeProcessValuesCollectionAsync(this.processValueCollectionBuffer.ExtractBuffer());
+        }
+
+        /// <summary>
+        /// Synchronously send the buffered data
+        /// </summary>
+        public void Purge()
+        {
+            try
+            {
+                PurgeTagCollectionAsync(this.tagCollectionBuffer.ExtractBuffer()).Wait();
+                PurgeProcessValuesCollectionAsync(this.processValueCollectionBuffer.ExtractBuffer()).Wait();
+            }
+            catch(AggregateException ae)
+            {
+                throw ae.Flatten();
+            }
         }
 
         private void InternalAddProcessValue(string tagName, object value)

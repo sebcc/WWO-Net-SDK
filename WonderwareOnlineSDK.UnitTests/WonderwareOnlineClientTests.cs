@@ -107,7 +107,7 @@ namespace WonderwareOnlineSDK.UnitTests
         }
 
         [Fact]
-        public async Task WonderwareOnlineClient_Purge_ExpectTagAndProcessValue()
+        public async Task WonderwareOnlineClient_PurgeAsync_ExpectTagAndProcessValue()
         {
             // SETUP
             var tags = new List<Tag>();
@@ -125,6 +125,33 @@ namespace WonderwareOnlineSDK.UnitTests
             // ACTION
             var client = new WonderwareOnlineClient(apiMock.Object, tagBuffer, processValueBuffer, "Valid Key");
             await client.PurgeAsync();
+
+            // ASSERT
+            Assert.Equal(0, tagBuffer.ItemCount);
+            Assert.Equal(0, processValueBuffer.ItemCount);
+            apiMock.Verify(a => a.SendTagAsync(It.Is<TagUploadRequest>(t => t.metadata.Count == 1)), Times.Once);
+            apiMock.Verify(a => a.SendValueAsync(It.Is<DataUploadRequest>(d => d.data.Count == 2)), Times.Once);
+        }
+
+        [Fact]
+        public void WonderwareOnlineClient_Purge_ExpectTagAndProcessValue()
+        {
+            // SETUP
+            var tags = new List<Tag>();
+            tags.Add(new Tag() { TagName = "Tag1" });
+
+            var processValues = new List<ProcessValue>();
+            processValues.Add(new ProcessValue() { Timestamp = new DateTime(2017, 4, 19, 11, 12, 13, 666, DateTimeKind.Utc), Value = 5, TagName = "Tag1" });
+            processValues.Add(new ProcessValue() { Timestamp = new DateTime(2017, 4, 19, 11, 12, 13, 666, DateTimeKind.Utc), Value = 6, TagName = "Tag2" });
+            processValues.Add(new ProcessValue() { Timestamp = new DateTime(2017, 4, 19, 11, 12, 13, 555, DateTimeKind.Utc), Value = 6, TagName = "Tag1" });
+
+            var tagBuffer = new CollectionBufferMoq<Tag>(tags.ToArray());
+            var processValueBuffer = new CollectionBufferMoq<ProcessValue>(processValues.ToArray());
+            var apiMock = new Mock<IWonderwareOnlineUploadApi>();
+
+            // ACTION
+            var client = new WonderwareOnlineClient(apiMock.Object, tagBuffer, processValueBuffer, "Valid Key");
+            client.Purge();
 
             // ASSERT
             Assert.Equal(0, tagBuffer.ItemCount);
