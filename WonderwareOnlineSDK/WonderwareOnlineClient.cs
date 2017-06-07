@@ -70,10 +70,32 @@
         /// Add a process value
         /// </summary>
         /// <param name="tagName">Name of the tag associated</param>
-        /// <param name="value">Vallue to add</param>
+        /// <param name="value">Value to add</param>
+        /// <param name="datetime">Datetime of value</param>
+        public void AddProcessValue(string tagName, string value, DateTime datetime)
+        {
+            this.InternalAddProcessValue(tagName, value, datetime);
+        }
+
+        /// <summary>
+        /// Add a process value
+        /// </summary>
+        /// <param name="tagName">Name of the tag associated</param>
+        /// <param name="value">Value to add</param>
         public void AddProcessValue(string tagName, byte value)
         {
             this.InternalAddProcessValue(tagName, value);
+        }
+
+        /// <summary>
+        /// Add a process value
+        /// </summary>
+        /// <param name="tagName">Name of the tag associated</param>
+        /// <param name="value">Vallue to add</param>
+        /// <param name="datetime">Datetime of value</param>
+        public void AddProcessValue(string tagName, byte value, DateTime datetime)
+        {
+            this.InternalAddProcessValue(tagName, value, datetime);
         }
 
         /// <summary>
@@ -91,9 +113,42 @@
         /// </summary>
         /// <param name="tagName">Name of the tag associated</param>
         /// <param name="value">Vallue to add</param>
+        /// <param name="datetime">Datetime of value</param>
+        public void AddProcessValue(string tagName, short value, DateTime datetime)
+        {
+            this.InternalAddProcessValue(tagName, value, datetime);
+        }
+
+        /// <summary>
+        /// Add a process value
+        /// </summary>
+        /// <param name="tagName">Name of the tag associated</param>
+        /// <param name="value">Vallue to add</param>
         public void AddProcessValue(string tagName, ushort value)
         {
             this.InternalAddProcessValue(tagName, value);
+        }
+
+         /// <summary>
+        /// Add a process value
+        /// </summary>
+        /// <param name="tagName">Name of the tag associated</param>
+        /// <param name="value">Vallue to add</param>
+        /// <param name="datetime">Datetime of value</param>
+        public void AddProcessValue(string tagName, ushort value, DateTime datetime)
+        {
+            this.InternalAddProcessValue(tagName, value, datetime);
+        }
+
+        /// <summary>
+        /// Add a process value
+        /// </summary>
+        /// <param name="tagName">Name of the tag associated</param>
+        /// <param name="value">Vallue to add</param>
+        /// <param name="datetime">Datetime of value</param>
+        public void AddProcessValue(string tagName, int value, DateTime datetime)
+        {
+            this.InternalAddProcessValue(tagName, value, datetime);
         }
 
         /// <summary>
@@ -117,6 +172,17 @@
         }
 
         /// <summary>
+        /// Add a process value
+        /// </summary>
+        /// <param name="tagName">Name of the tag associated</param>
+        /// <param name="value">Vallue to add</param>
+        /// <param name="datetime">Datetime of value</param>
+        public void AddProcessValue(string tagName, uint value, DateTime datetime)
+        {
+            this.InternalAddProcessValue(tagName, value, datetime);
+        }
+
+        /// <summary>
         /// /// Add a process value
         /// </summary>
         /// <param name="tagName">Name of the tag associated</param>
@@ -127,6 +193,17 @@
         }
 
         /// <summary>
+        /// /// Add a process value
+        /// </summary>
+        /// <param name="tagName">Name of the tag associated</param>
+        /// <param name="value">Vallue to add</param>
+        /// <param name="datetime">Datetime of value</param>
+        public void AddProcessValue(string tagName, float value, DateTime datetime)
+        {
+            this.InternalAddProcessValue(tagName, value, datetime);
+        }
+
+        /// <summary>
         /// Add a process value
         /// </summary>
         /// <param name="tagName">Name of the tag associated</param>
@@ -134,6 +211,17 @@
         public void AddProcessValue(string tagName, double value)
         {
             this.InternalAddProcessValue(tagName, value);
+        }
+
+        /// <summary>
+        /// Add a process value
+        /// </summary>
+        /// <param name="tagName">Name of the tag associated</param>
+        /// <param name="value">Vallue to add</param>
+        /// <param name="datetime">Datetime of value</param>
+        public void AddProcessValue(string tagName, double value, DateTime datetime)
+        {
+            this.InternalAddProcessValue(tagName, value, datetime);
         }
 
         /// <summary>
@@ -176,7 +264,7 @@
             }
         }
 
-        private void InternalAddProcessValue(string tagName, object value)
+        private void InternalAddProcessValue(string tagName, object value, DateTime timestamp = default(DateTime))
         {
             if (string.IsNullOrWhiteSpace(tagName))
             {
@@ -188,7 +276,11 @@
                 throw new ArgumentException("Value should not be null or empty", nameof(value));
             }
 
-            this.processValueCollectionBuffer.AddItem(new ProcessValue() { TagName = tagName, Timestamp = DateTime.UtcNow, Value = value });
+            this.processValueCollectionBuffer.AddItem(
+                new ProcessValue() { 
+                    TagName = tagName, 
+                    Timestamp = timestamp == default(DateTime)?DateTime.UtcNow: timestamp, 
+                    Value = value });
         }
 
         private async Task PurgeTagCollectionAsync(IEnumerable<Tag> tagsBuffer)
